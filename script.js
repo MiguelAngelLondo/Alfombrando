@@ -81,26 +81,34 @@ const catalogo = [
 
 document.addEventListener("DOMContentLoaded", () => {
   mostrarCategorias();
-  crearModal();
-
+  // Eliminado la llamada a crearModal() que estaba causando problemas
   const header = document.querySelector('.header');
   let lastScrollY = window.scrollY;
-
+  
   window.addEventListener('scroll', () => {
     if (window.scrollY > lastScrollY) {
+      // Scroll hacia abajo - ocultar header
       header.classList.add('ocultar-header');
     } else {
+      // Scroll hacia arriba - mostrar header
       header.classList.remove('ocultar-header');
     }
-
+    
+    // Añadir clase para header sólido cuando se hace scroll
     if (window.scrollY > 50) {
       header.classList.add('header-solido');
     } else {
       header.classList.remove('header-solido');
     }
-
+    
     lastScrollY = window.scrollY;
   });
+});
+
+// Asegurarse de que el header no se oculte cuando se carga la página
+window.addEventListener('load', () => {
+  const header = document.querySelector('.header');
+  header.classList.remove('ocultar-header');
 });
 
 function mostrarCategorias() {
@@ -164,20 +172,20 @@ function mostrarCategorias() {
   cont.appendChild(wrapper);
 }
 
-function crearModal() {
-  const modal = document.createElement("div");
-  modal.id = "modal-producto";
-  modal.className = "detalle-modal";
-  modal.innerHTML = `
-    <div class="detalle-card">
-      <button class="cerrar-btn" onclick="cerrarModal()">×</button>
-      <img id="modal-img" src="" alt="">
-      <h3 id="modal-nombre"></h3>
-      <p id="modal-desc"></p>
-    </div>
-  `;
-  document.body.appendChild(modal);
-}
+// function crearModal() {
+//   const modal = document.createElement("div");
+//   modal.id = "modal-producto";
+//  modal.className = "detalle-modal";
+//   modal.innerHTML = `
+//     <div class="detalle-card">
+//       <button class="cerrar-btn" onclick="cerrarModal()">×</button>
+//       <img id="modal-img" src="" alt="">
+//       <h3 id="modal-nombre"></h3>
+//       <p id="modal-desc"></p>
+//     </div>
+//   `;
+//   document.body.appendChild(modal);
+// }
 
 function mostrarModal(producto) {
   document.getElementById("modal-img").src = producto.imagen;
